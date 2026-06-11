@@ -1,0 +1,21 @@
+variables:
+
+  agent-pool: linux
+  appName: my-api
+  appservice: my-api-dev
+  az-acr-image: portal-api
+  az-acr-name: acrdevsecops
+  az-acr-registry : acrdevsecops.azurecr.io
+  imagerepository: api
+  az-acr-tag: dev
+  az-resourcegroup-name: Devsecops-deployment
+  az-sp-service-connection: SPAZD00001
+  envprefix: dev
+  ASPNETCORE_ENVIRONMENT: Development
+
+  ## SonarQube
+  sonar-project-key: my-api-dev
+
+  ### Veracode
+  veracode-app-profile: 00000-api
+  veracode-saandbox-name: 00000-api-dev
