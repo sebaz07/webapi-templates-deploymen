@@ -5,7 +5,7 @@ variables:
   appservice: my-api-dev
   az-acr-image: portal-api
   az-acr-name: acrdevsecops
-  az-acr-registry : acrdevsecops.azurecr.io
+  az-acr-registry: acrdevsecops.azurecr.io
   imagerepository: api
   az-acr-tag: dev
   az-resourcegroup-name: Devsecops-deployment
@@ -15,7 +15,10 @@ variables:
 
   ## SonarQube
   sonar-project-key: my-api-dev
+  sonar-service-connection: SC-SONARQUBE
 
   ### Veracode
   veracode-app-profile: 00000-api
-  veracode-saandbox-name: 00000-api-dev
+  # renamed from 'veracode-saandbox-name' (typo) — templates use the new key
+  veracode-sandbox-name: 00000-api-dev
+  veracode-service-connection: SC-VERACODE

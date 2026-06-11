@@ -1,0 +1,46 @@
+# =============================================================================
+# webapi — consumer pipeline (trunk-based / GitHub-flow, the migration target)
+# -----------------------------------------------------------------------------
+# To run the legacy GitFlow model instead, change ONE line:
+#   - template: azure-pipelines.yaml@templates
+# Configuration lives ONLY in devsecops/vars/*.yaml (loaded by the templates).
+# =============================================================================
+trigger:
+  branches:
+    include:
+      - main
+      - feature/*
+  paths:
+    include:
+      - webapi/**
+
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - webapi/**
+
+resources:
+  repositories:
+    - repository: templates
+      # Templates live in Azure Repos (org Sebastian-Martinez-07), consumer lives
+      # on GitHub: the pipeline runs in the same AzDO org, so 'git' type resolves.
+      # https://dev.azure.com/Sebastian-Martinez-07/All-Projects/_git/devsecops-templates
+      type: git
+      name: All-Projects/devsecops-templates
+      ref: refs/heads/main
+
+stages:
+  - template: azure-pipelines-trunkbased.yaml@templates
+    parameters:
+      deployTarget: appservice
+      projectPath: 'webapi/webapi.csproj'
+      dotnetSdkVersion: '10.x'
+      dockerfilePath: 'webapi/Dockerfile'
+      buildContext: 'webapi'
+      varsFiles:                         # repo-root-relative paths (resolved @self)
+        dev: webapi/devsecops/vars/vars-file-dev.yaml
+        qa: webapi/devsecops/vars/vars-file-qa.yaml
+        prod: webapi/devsecops/vars/vars-file-prod.yaml
